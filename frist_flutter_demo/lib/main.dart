@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:frist_flutter_demo/baseWidget/SwitchAndCheckBoxTestRoute.dart';
+import 'package:frist_flutter_demo/baseWidget/TextfiledForm.dart';
 import 'package:frist_flutter_demo/baseWidget/button.dart';
+import 'package:frist_flutter_demo/baseWidget/imageIcon.dart';
 import 'package:frist_flutter_demo/baseWidget/stateManager.dart';
 import 'package:frist_flutter_demo/baseWidget/text.dart';
 import 'package:frist_flutter_demo/baseWidget/widget.dart';
+import 'package:frist_flutter_demo/layoutWidget/Align.dart';
+import 'package:frist_flutter_demo/layoutWidget/Constrained.dart';
+import 'package:frist_flutter_demo/layoutWidget/Flex.dart';
+import 'package:frist_flutter_demo/layoutWidget/Padding.dart';
+import 'package:frist_flutter_demo/layoutWidget/RowColum.dart';
+import 'package:frist_flutter_demo/layoutWidget/Stack.dart';
+import 'package:frist_flutter_demo/layoutWidget/Wrap.dart';
 import 'package:frist_flutter_demo/myDrawer.dart';
 
 import 'package:frist_flutter_demo/route/echoRoute.dart';
@@ -36,6 +46,8 @@ class MyApp extends StatelessWidget {
             print(routeName);
             if(routeName == 'WidgetLayout') {
               return WidgetLayout();
+            } else if (routeName == 'ImageIcon') {
+              return ImageIconLayout();
             }
             return NewRoute();
             // 如果访问的路由页需要登录，但当前未登录，则直接返回登录页路由，
@@ -44,6 +56,15 @@ class MyApp extends StatelessWidget {
         },
         //注册路由表
         routes: {
+          "Constrained": (context) => Constrained(),
+          "PaddingLayout": (context) => PaddingLayout(),
+          "AlignLayout": (context) => AlignLayout(),
+          "StackLayout": (context) => StackLayout(),
+          "WrapLayout": (context) => WrapLayout(),
+          "FlexLayout": (context) => FlexLayout(),
+          "RowColum": (context) => RowColum(),
+          "TextfiledForm": (context) => TextfiledForm(),
+          "SwitchAndCheckBoxTestRoute": (context) => SwitchAndCheckBoxTestRoute(),
           "ButtonLayout": (context) => ButtonLayout(),
           "TextLayout": (context) => TextLayout(),
           "StateManager": (context) => StateManager(),
@@ -113,11 +134,10 @@ class _MyHomePageState extends State<MyHomePage> {
       , // 分析 1
       child: Container(
         child: Center(
-          child: Text(title,   // 分析 2
-              style: TextStyle(fontSize: 16.0, color: Colors.white)),
+          child: Text(title, 
+              textAlign: TextAlign.center,  // 分析 2
+              style: TextStyle(fontSize: 10.0, color: Colors.white)),
         ),
-        width: 200.0,
-        height: 200.0,
         decoration: BoxDecoration(
           color: Colors.lightGreen[700],
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -166,8 +186,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: GridView.builder(
         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, //每行三列
-            childAspectRatio: 2.0, //显示区域宽高相等
+            crossAxisCount: 4, //每行三列
+            childAspectRatio: 3.0, //显示区域宽高相等
             mainAxisSpacing: 10.0,
             crossAxisSpacing: 10.0,
         ),
@@ -193,6 +213,16 @@ class _MyHomePageState extends State<MyHomePage> {
           containerItem('StateManager', "状态管理"),
           containerItem('TextLayout', "文本及样式"),
           containerItem('ButtonLayout', "按钮"),
+          containerItem('ImageIcon', " 图片及ICON"),
+          containerItem('SwitchAndCheckBoxTestRoute', "开关复选框进度条"),
+          containerItem('TextfiledForm', "输入框及表单"),
+          containerItem('RowColum', "线性布局Row，Colum"),
+          containerItem('FlexLayout', "弹性布局（Flex）"),
+          containerItem('WrapLayout', "流式布局"),
+          containerItem('StackLayout', "层叠布局"),
+          containerItem('AlignLayout', '对齐与相对定位'),
+          containerItem('PaddingLayout', '填充（Padding）'),
+          containerItem('Constrained', '尺寸限制类容器')
         ]);
       });
     });
