@@ -8,10 +8,13 @@ import 'package:frist_flutter_demo/baseWidget/text.dart';
 import 'package:frist_flutter_demo/baseWidget/widget.dart';
 import 'package:frist_flutter_demo/layoutWidget/Align.dart';
 import 'package:frist_flutter_demo/layoutWidget/Constrained.dart';
+import 'package:frist_flutter_demo/layoutWidget/Container.dart';
+import 'package:frist_flutter_demo/layoutWidget/DecoratedBox.dart';
 import 'package:frist_flutter_demo/layoutWidget/Flex.dart';
 import 'package:frist_flutter_demo/layoutWidget/Padding.dart';
 import 'package:frist_flutter_demo/layoutWidget/RowColum.dart';
 import 'package:frist_flutter_demo/layoutWidget/Stack.dart';
+import 'package:frist_flutter_demo/layoutWidget/Transform.dart';
 import 'package:frist_flutter_demo/layoutWidget/Wrap.dart';
 import 'package:frist_flutter_demo/myDrawer.dart';
 
@@ -56,6 +59,9 @@ class MyApp extends StatelessWidget {
         },
         //注册路由表
         routes: {
+          "ContainerLayout": (context) => ContainerLayout(),
+          "TransformLayout": (context) => TransformLayout(),
+          "DecoratedBoxLayout": (context) => DecoratedBoxLayout(),
           "Constrained": (context) => Constrained(),
           "PaddingLayout": (context) => PaddingLayout(),
           "AlignLayout": (context) => AlignLayout(),
@@ -222,7 +228,10 @@ class _MyHomePageState extends State<MyHomePage> {
           containerItem('StackLayout', "层叠布局"),
           containerItem('AlignLayout', '对齐与相对定位'),
           containerItem('PaddingLayout', '填充（Padding）'),
-          containerItem('Constrained', '尺寸限制类容器')
+          containerItem('Constrained', '尺寸限制类容器'),
+          containerItem('DecoratedBoxLayout', '装饰容器DecoratedBox'),
+          containerItem('TransformLayout', '变换（Transform）'),
+           containerItem('ContainerLayout', 'Container容器'),
         ]);
       });
     });

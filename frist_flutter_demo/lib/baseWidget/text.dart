@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class TextLayout extends StatefulWidget {
@@ -8,6 +9,7 @@ class TextLayout extends StatefulWidget {
 }
 
 class _TextLayout extends State<TextLayout> {
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -46,14 +48,23 @@ class _TextLayout extends State<TextLayout> {
             Text.rich(TextSpan(children: [
               TextSpan(text: "Home: "),
               TextSpan(
-                text: "https://flutterchina.club",
-                style: TextStyle(color: Colors.blue),
-              ),
+                  text: "https://flutterchina.club",
+                  style: TextStyle(color: Colors.blue),
+                  recognizer: new TapGestureRecognizer()
+                    ..onTap = () {
+                      var alert = new AlertDialog(
+                        title: new Text("Title"),
+                        content: new Text("four is tapped"),
+                      );
+                      showDialog(context: context, child: alert);
+                    }
+                  ),
             ])),
             Text(
               "Use the font for this text",
               style: TextStyle(
                 fontFamily: 'Robot',
+                fontWeight: FontWeight.bold,
               ),
             ),
             DefaultTextStyle(
