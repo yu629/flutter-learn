@@ -7,12 +7,19 @@ import 'package:frist_flutter_demo/baseWidget/stateManager.dart';
 import 'package:frist_flutter_demo/baseWidget/text.dart';
 import 'package:frist_flutter_demo/baseWidget/widget.dart';
 import 'package:frist_flutter_demo/layoutWidget/Align.dart';
+import 'package:frist_flutter_demo/layoutWidget/Canvas.dart';
+import 'package:frist_flutter_demo/layoutWidget/Clip.dart';
 import 'package:frist_flutter_demo/layoutWidget/Constrained.dart';
 import 'package:frist_flutter_demo/layoutWidget/Container.dart';
+import 'package:frist_flutter_demo/layoutWidget/CustomScrollView.dart';
 import 'package:frist_flutter_demo/layoutWidget/DecoratedBox.dart';
 import 'package:frist_flutter_demo/layoutWidget/Flex.dart';
+import 'package:frist_flutter_demo/layoutWidget/GirdFlowView.dart';
+import 'package:frist_flutter_demo/layoutWidget/Hero.dart';
+import 'package:frist_flutter_demo/layoutWidget/ListView.dart';
 import 'package:frist_flutter_demo/layoutWidget/Padding.dart';
 import 'package:frist_flutter_demo/layoutWidget/RowColum.dart';
+import 'package:frist_flutter_demo/layoutWidget/ScrollListion.dart';
 import 'package:frist_flutter_demo/layoutWidget/Stack.dart';
 import 'package:frist_flutter_demo/layoutWidget/Transform.dart';
 import 'package:frist_flutter_demo/layoutWidget/Wrap.dart';
@@ -47,7 +54,7 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(builder: (context) {
             String routeName = settings.name;
             print(routeName);
-            if(routeName == 'WidgetLayout') {
+            if (routeName == 'WidgetLayout') {
               return WidgetLayout();
             } else if (routeName == 'ImageIcon') {
               return ImageIconLayout();
@@ -59,6 +66,13 @@ class MyApp extends StatelessWidget {
         },
         //注册路由表
         routes: {
+          "CanvasLayout": (context) => CanvasLayout(),
+          "HeroLayout": (context) => HeroLayout(),
+          "ScrollLayout": (context) => ScrollLayout(),
+          "CustomLayout": (context) => CustomLayout(),
+          "GirdViewLayout": (context) => GirdViewLayout(),
+          "ListViewLayout": (context) => ListViewLayout(),
+          "ClipLayout": (context) => ClipLayout(),
           "ContainerLayout": (context) => ContainerLayout(),
           "TransformLayout": (context) => TransformLayout(),
           "DecoratedBoxLayout": (context) => DecoratedBoxLayout(),
@@ -70,7 +84,8 @@ class MyApp extends StatelessWidget {
           "FlexLayout": (context) => FlexLayout(),
           "RowColum": (context) => RowColum(),
           "TextfiledForm": (context) => TextfiledForm(),
-          "SwitchAndCheckBoxTestRoute": (context) => SwitchAndCheckBoxTestRoute(),
+          "SwitchAndCheckBoxTestRoute": (context) =>
+              SwitchAndCheckBoxTestRoute(),
           "ButtonLayout": (context) => ButtonLayout(),
           "TextLayout": (context) => TextLayout(),
           "StateManager": (context) => StateManager(),
@@ -111,10 +126,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 1;
 
-  List<Widget> _dataMap = [
-  ];
+  List<Widget> _dataMap = [];
 
-  static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
+  static GlobalKey<ScaffoldState> _globalKey = GlobalKey();
 
   @override
   void initState() {
@@ -128,20 +142,17 @@ class _MyHomePageState extends State<MyHomePage> {
     //全局打开抽屉方法
     // _globalKey.currentState.openDrawer();
 
-     //定义点击函数
-     Navigator.pushNamed(context, navigateName);
+    //定义点击函数
+    Navigator.pushNamed(context, navigateName);
   }
 
-  Widget containerItem(navigateName, title){
-    return (
-      GestureDetector(
-      onTap: () =>
-        _onTap(navigateName)
-      , // 分析 1
+  Widget containerItem(navigateName, title) {
+    return (GestureDetector(
+      onTap: () => _onTap(navigateName), // 分析 1
       child: Container(
         child: Center(
-          child: Text(title, 
-              textAlign: TextAlign.center,  // 分析 2
+          child: Text(title,
+              textAlign: TextAlign.center, // 分析 2
               style: TextStyle(fontSize: 10.0, color: Colors.white)),
         ),
         decoration: BoxDecoration(
@@ -149,16 +160,14 @@ class _MyHomePageState extends State<MyHomePage> {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       ),
-    )
-    );
+    ));
   }
-
 
   @override
   Widget build(BuildContext context) {
     //定义一个globalKey, 由于GlobalKey要保持全局唯一性，我们使用静态变量存储
     return Scaffold(
-      key: _globalKey , //设置key
+      key: _globalKey, //设置key
       appBar: AppBar(
         //导航栏
         title: Text("Flutter Demo"),
@@ -177,35 +186,51 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       drawer: new MyDrawer(), //抽屉
-      bottomNavigationBar: BottomNavigationBar(
-        // 底部导航
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.business), title: Text('资讯')),
-          BottomNavigationBarItem(icon: Icon(Icons.school), title: Text('我的')),
-        ],
-        currentIndex: _selectedIndex,
-        fixedColor: Colors.blue,
-        onTap: _onItemTapped,
+      // bottomNavigationBar: BottomNavigationBar(
+      //   // 底部导航
+      //   items: <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.business), title: Text('资讯')),
+      //     BottomNavigationBarItem(icon: Icon(Icons.school), title: Text('我的')),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   fixedColor: Colors.blue,
+      //   onTap: _onItemTapped,
+      // ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        shape: CircularNotchedRectangle(), // 底部导航栏打一个圆形的洞
+        child: Row(
+          children: [
+            IconButton(icon: Icon(Icons.home), onPressed: () {}),
+            SizedBox(), //中间位置空出
+            IconButton(icon: Icon(Icons.business), onPressed: () {}),
+          ],
+          mainAxisAlignment: MainAxisAlignment.spaceAround, //均分底部导航栏横向空间
+        ),
       ),
       body: GridView.builder(
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4, //每行三列
             childAspectRatio: 3.0, //显示区域宽高相等
             mainAxisSpacing: 10.0,
             crossAxisSpacing: 10.0,
-        ),
-        itemCount: _dataMap.length,
-        itemBuilder: (context, index) {
-          //如果显示到最后一个并且Icon总数小于200时继续获取数据
-          // if (index == _dataMap.length - 1 && _dataMap.length < 200) {
-          //   _retrieveIcons();
-          // }
-          return _dataMap[index];
-        }
-    ),
+          ),
+          itemCount: _dataMap.length,
+          itemBuilder: (context, index) {
+            //如果显示到最后一个并且Icon总数小于200时继续获取数据
+            // if (index == _dataMap.length - 1 && _dataMap.length < 200) {
+            //   _retrieveIcons();
+            // }
+            return _dataMap[index];
+          }),
+      floatingActionButton: FloatingActionButton(
+          //悬浮按钮
+          child: Icon(Icons.add),
+          onPressed: () {}),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -231,7 +256,14 @@ class _MyHomePageState extends State<MyHomePage> {
           containerItem('Constrained', '尺寸限制类容器'),
           containerItem('DecoratedBoxLayout', '装饰容器DecoratedBox'),
           containerItem('TransformLayout', '变换（Transform）'),
-           containerItem('ContainerLayout', 'Container容器'),
+          containerItem('ContainerLayout', 'Container容器'),
+          containerItem('ClipLayout', '剪裁（Clip）'),
+          containerItem('ListViewLayout', 'ListView'),
+          containerItem('GirdViewLayout', 'GridView'),
+          containerItem('CustomLayout', 'CustomScrollView'),
+          containerItem('ScrollLayout', '滑动监听'),
+          containerItem('HeroLayout', 'Hero动画'),
+          containerItem("CanvasLayout", '自绘组件')
         ]);
       });
     });
